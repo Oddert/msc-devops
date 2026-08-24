@@ -53,7 +53,7 @@
 
 - Intro
 - DevOps Strategy
-  - Combined tool, process, architecture defence + decribing stages
+  - Combined tool, process, architecture defence + describing stages
     - Feedback driven development
       - SDD, TDD
       - Communication etc
@@ -69,16 +69,16 @@
 - Collaboration
 - Communication
 - Automation
-- Continous Improvment
-- Continous Delivery
-- Continous feedback
+- Continuous Improvement
+- Continuous Delivery
+- Continuous feedback
 - Customer centric action / customer centric decision making
 - Create with the end in mind
-- Data based descision making
+- Data based decision making
 - Learn from mistakes
 - Shared goals & responsibility / Responsibility through the cycle
 - Infrastructure as code
-- Monotoring & Logging
+- Monitoring & Logging
 - Agile principles
 - Security Integration DevSecOps
 - Version control
@@ -88,7 +88,7 @@
 
 - Collaboration
   - Monorepo for combined issues
-  - Spec diven development
+  - Spec driven development
   - Standards enforcement (ruff, spectral)
 - Communication
   - Docs in code
@@ -171,3 +171,30 @@
   - DB migrations
 
 - E2E Responsibility
+
+## Possible Repetitions
+
+- is point adequately made about 'security throughout' in assessment?
+- between Containerisation and Automatic Deployments
+- version control within CICD section
+- time to action a report
+- effect of 'pat on the back' on developers
+- LLM PR review effectiveness
+- quality of logging
+- 
+
+## Can Get A Source
+
+- Noisy notifications
+- Documentation quality
+- Usefulness of linters
+- Database schema stability
+- versioning static assets
+
+## Unverified Claims
+
+- Full stack mindset
+- CI daily merge
+- l1 support
+- DORA, TMMi
+- team effectiveness re DORA and CI
