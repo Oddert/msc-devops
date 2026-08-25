@@ -59,5 +59,5 @@ resource "aws_s3_bucket_policy" "b_policy" {
 }
 
 output "website" {
-    value = "http://${aws_s3_bucket.b.website_endpoint}"
+  value = "https://s3.${aws_s3_bucket.b.region}.amazonaws.com/${aws_s3_bucket.b.id}/index.html"
 }
