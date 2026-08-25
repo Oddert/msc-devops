@@ -4,6 +4,11 @@ provider "aws" {
 
 terraform {
     backend "s3" {
+        bucket = "${var.env_prefix}.do-demo.com.tfstate"
+        key = "terraform.tfstate"
+        region = "eu-west-2"
+        encrypt = true
+        dynamodb_table = "terraform-locks"
     }
 }
 
@@ -48,5 +53,5 @@ resource "aws_s3_bucket_acl" "b_acl" {
 }
 
 output "website" {
-    value = "http://${aws_s3_bucket.b.website_endpoint}"
+    value = "http://${aws_s3_bucket.b.bucket_regional_domain_name}"
 }
