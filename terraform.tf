@@ -14,7 +14,6 @@ variable "is_temp_env" {
 
 resource "aws_s3_bucket" "b" {
     bucket = "${var.env_prefix}do-demo.com"
-    acl = "public-read"
     force_destroy = var.is_temp_env
 
     policy = <<POLICY
@@ -39,6 +38,11 @@ resource "aws_s3_bucket" "b" {
   tags = {
     ManagedBy = "terraform"
   }
+}
+
+resource "aws_s3_bucket_acl" "b_acl" {
+  bucket = aws_s3_bucket.b.id
+  acl    = "public-read"
 }
 
 output "website" {
