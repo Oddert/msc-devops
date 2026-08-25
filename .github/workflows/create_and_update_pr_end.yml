@@ -35,10 +35,10 @@ jobs:
           terraform_version: "1.7.0"
 
       - name: Terraform Init
-        run: terraform init -backend-config=backend.hcl
+        run: terraform init -backend-config=backend.hcl -backend-config="key=${{ env.BRANCH_NAME }}.jkrsp.com.tfstate" -input=false
 
       - name: Terraform Plan
-        run: terraform plan -var="is_temp_env=true" -var="env_prefix=${{ env.BRANCH_NAME }}." -out tf.plan
+        run: terraform plan -input=false -var="is_temp_env=true" -var="env_prefix=${{ env.BRANCH_NAME }}." -out tf.plan
 
       - name: Terraform Apply
         run: terraform apply tf.plan
