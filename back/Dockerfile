@@ -1,5 +1,5 @@
 # Use the desired Python version as a build argument
-ARG PYTHON_VERSION 3.14.0
+ARG PYTHON_VERSION=3.14.0
 
 # Base image
 FROM python:${PYTHON_VERSION}-slim AS base
