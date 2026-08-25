@@ -35,7 +35,7 @@ jobs:
           terraform_version: "1.7.0"
 
       - name: Terraform Init
-        run: terraform init -backend-config=backend.hcl -backend-config="key=${{ env.BRANCH_NAME }}.jkrsp.com.tfstate" -input=false
+        run: terraform init -backend-config=backend.hcl -backend-config="key=${{ env.BRANCH_NAME }}.do-demo.com.tfstate" -input=false
 
       - name: Terraform Plan
         run: terraform plan -input=false -var="is_temp_env=true" -var="env_prefix=${{ env.BRANCH_NAME }}." -out tf.plan
@@ -55,7 +55,7 @@ jobs:
           aws-region: eu-west-2
 
       - name: Sync to S3
-        run: aws s3 sync front/dist s3://${{ env.BRANCH_NAME }}.jkrsp.com
+        run: aws s3 sync front/dist s3://${{ env.BRANCH_NAME }}.do-demo.com
 
       - name: Add PR Comment
         uses: actions/github-script@v7
