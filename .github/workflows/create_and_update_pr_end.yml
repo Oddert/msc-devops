@@ -1,11 +1,17 @@
+name: Create PR Env
+
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   pull_request:
     types: [reopened, opened, synchronize, edited]
 
-name: Create PR Env
 jobs:
   create_or_update_pr_env:
     runs-on: ubuntu-latest
+    # potentially can move permissions here to keep scoped if issues later
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
