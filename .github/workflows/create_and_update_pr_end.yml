@@ -72,7 +72,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `[Review website here](${website})`
+              body: `Build complete, review a [preview of the site here](${website})`
             })
         env:
           WEBSITE_LINK: ${{ steps.terraform.outputs.website }}
