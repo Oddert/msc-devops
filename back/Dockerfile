@@ -1,8 +1,8 @@
 # Use the desired Python version as a build argument
-ARG PYTHON_VERSION=3.14.0
+# ARG PYTHON_VERSION=
 
 # Base image
-FROM python:${PYTHON_VERSION}-slim AS base
+FROM python:3.14.0-slim AS base
 
 # Set the working directory to /app
 WORKDIR /app
