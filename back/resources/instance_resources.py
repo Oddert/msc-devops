@@ -69,7 +69,7 @@ async def get_all_instances(
 
 
 @router.get('/org-names')
-@protected_endpoint()
+# @protected_endpoint()
 async def get_space_mapping(
     request: Request,
     response: Response,
