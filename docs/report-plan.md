@@ -181,7 +181,6 @@
 - effect of 'pat on the back' on developers
 - LLM PR review effectiveness
 - quality of logging
-- 
 
 ## Can Get A Source
 
