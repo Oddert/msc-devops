@@ -18,7 +18,7 @@ variable "is_temp_env" {
 }
 
 resource "aws_s3_bucket" "b" {
-    bucket = "${var.env_prefix}.do-demo.com"
+    bucket = "${var.env_prefix}do-demo.com"
     force_destroy = var.is_temp_env
 
     website {
