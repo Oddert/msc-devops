@@ -12,7 +12,7 @@ async function run() {
       issue_number,
       // We unfortunately need to use replace to get rid
       // of extraneous double quotes
-      body: `[Review website here](${website_link.replace(/"/gs, '')})`
+      body: `Build complete, review a [preview of the site here](${website_link.replace(/"/gs, '')})`
     });
 
     // for debugging, lets log the created comment
