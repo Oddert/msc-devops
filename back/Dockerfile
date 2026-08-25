@@ -2,7 +2,7 @@
 # ARG PYTHON_VERSION=
 
 # Base image
-FROM python:3.14.0-slim AS base
+FROM python:3.14-slim AS base
 
 # Set the working directory to /app
 WORKDIR /app
