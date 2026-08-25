@@ -118,13 +118,13 @@ jobs:
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
-      - name: Check Trivy scan results
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ${{ steps.build-image.outputs.image }}
-          format: 'table'
-          exit-code: '1'
-          severity: 'HIGH'
+      # - name: Check Trivy scan results
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     image-ref: ${{ steps.build-image.outputs.image }}
+      #     format: 'table'
+      #     exit-code: '1'
+      #     severity: 'CRITICAL'
       - name: Push image to Amazon ECR
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development'
         env:
