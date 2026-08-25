@@ -30,8 +30,19 @@ resource "aws_s3_bucket" "b" {
     }
 }
 
+resource "aws_s3_bucket_public_access_block" "b_public_access" {
+    bucket = aws_s3_bucket.b.id
+
+    block_public_acls       = true
+    block_public_policy     = false
+    ignore_public_acls      = true
+    restrict_public_buckets = false
+}
+
 resource "aws_s3_bucket_policy" "b_policy" {
     bucket = aws_s3_bucket.b.id
+
+    depends_on = [aws_s3_bucket_public_access_block.b_public_access]
 
     policy = jsonencode({
       Version = "2012-10-17"
@@ -45,11 +56,6 @@ resource "aws_s3_bucket_policy" "b_policy" {
         }
       ]
     })
-}
-
-resource "aws_s3_bucket_acl" "b_acl" {
-    bucket = aws_s3_bucket.b.id
-    acl    = "public-read"
 }
 
 output "website" {
