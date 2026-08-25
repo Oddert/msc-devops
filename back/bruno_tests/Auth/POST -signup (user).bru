@@ -1,0 +1,29 @@
+meta {
+  name: POST /signup (user)
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{url}}/auth/signup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "robyn",
+    "password": "password",
+    "readableName": "Robyn",
+    "areas": [
+      "PDB_User",
+      "rPcf_PICOE",
+      "rPcf_PICOEFIN"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

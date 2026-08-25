@@ -1,0 +1,29 @@
+meta {
+  name: POST /login (user)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/auth/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "user",
+    "password": "password"
+  }
+}
+
+script:post-response {
+  bru.setEnvVar('accessToken', res.body.accessToken);
+  bru.setEnvVar('refreshToken', res.body.refreshToken);
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

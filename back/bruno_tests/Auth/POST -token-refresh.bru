@@ -1,0 +1,22 @@
+meta {
+  name: POST /token-refresh
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:8081/api/v0/auth/token-refresh
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "refreshToken": {{refreshToken}}
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

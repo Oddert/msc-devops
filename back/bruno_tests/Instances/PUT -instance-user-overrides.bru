@@ -1,0 +1,28 @@
+meta {
+  name: PUT /instance/user-overrides
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{url}}/instance/user-overrides/{{pcf_huid}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "readableName": "Test Name Override",
+    "description": "Test description"
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
