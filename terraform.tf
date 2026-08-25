@@ -4,8 +4,11 @@ provider "aws" {
 
 terraform {
     backend "s3" {
-        bucket = "jkrsp-tf-state"
-        region = "eu-west-2"
+        # bucket = "${var.env_prefix}.do-demo.com.tfstate"
+        # key = "terraform.tfstate"
+        # region = "eu-west-2"
+        # encrypt = true
+        # dynamodb_table = "terraform-locks"
     }
 }
 
@@ -15,34 +18,46 @@ variable "is_temp_env" {
 }
 
 resource "aws_s3_bucket" "b" {
-    bucket = "${var.env_prefix}jkrsp.com"
-    acl = "public-read"
+    bucket = "${var.env_prefix}do-demo.com"
     force_destroy = var.is_temp_env
 
-    policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "PublicReadGetObject",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::${var.env_prefix}jkrsp.com/*"
+    website {
+      index_document = "index.html"
     }
-  ]
+
+    tags = {
+      ManagedBy = "terraform"
+    }
 }
-  POLICY
 
-  website {
-    index_document = "index.html"
-  }
+resource "aws_s3_bucket_public_access_block" "b_public_access" {
+    bucket = aws_s3_bucket.b.id
 
-  tags = {
-    ManagedBy = "terraform"
-  }
+    block_public_acls       = true
+    block_public_policy     = false
+    ignore_public_acls      = true
+    restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_policy" "b_policy" {
+    bucket = aws_s3_bucket.b.id
+
+    depends_on = [aws_s3_bucket_public_access_block.b_public_access]
+
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Sid       = "PublicReadGetObject"
+          Effect    = "Allow"
+          Principal = "*"
+          Action    = "s3:GetObject"
+          Resource  = "${aws_s3_bucket.b.arn}/*"
+        }
+      ]
+    })
 }
 
 output "website" {
-  value = "http://${aws_s3_bucket.b.website_endpoint}"
+  value = "https://s3.${aws_s3_bucket.b.region}.amazonaws.com/${aws_s3_bucket.b.id}/index.html"
 }
