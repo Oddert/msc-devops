@@ -50,6 +50,10 @@ jobs:
           IMAGE_TAG: ${{ steps.meta.outputs.version }}
         run: |
           # Build the Docker image
+          echo "======= TEMP DEBUG OUTPUT ========="
+          echo $ECR_REGISTRY
+          echo $ECR_REPOSITORY
+          echo "======= / TEMP DEBUG OUTPUT ========="
           docker buildx build \
             --platform linux/amd64 \
             --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
