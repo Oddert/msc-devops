@@ -1,0 +1,20 @@
+meta {
+  name: GET /instance/pcf-id/{instance_id}
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{url}}/instance/pcf-id/{{whatif-pcf-id}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

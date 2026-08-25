@@ -1,0 +1,17 @@
+alembic
+apscheduler
+bcrypt
+cryptography
+fastapi
+httpx
+loguru
+pre-commit
+psycopg2
+pytest
+pytest-asyncio
+pyjwt
+pytz
+ruff
+sqlalchemy
+uvicorn
+websockets

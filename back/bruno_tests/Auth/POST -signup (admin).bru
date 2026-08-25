@@ -1,0 +1,33 @@
+meta {
+  name: POST /signup (admin)
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/auth/signup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "andy",
+    "password": "password",
+    "readableName": "Andy",
+    "areas": [
+      "PDB_User",
+      "PDB_Admin",
+      "rPcf_PICOE",
+      "rPcf_PICOEFIN",
+      "rPcf_AIDEN",
+      "rPcf_WHATIF",
+      "rPcf_MEMALPHA"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

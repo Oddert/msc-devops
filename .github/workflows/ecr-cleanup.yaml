@@ -1,0 +1,63 @@
+# credit: https://gokulupadhyayguragain.medium.com/build-and-push-docker-images-to-ecr-with-github-actions-18a3eaefbded
+name: ECR Image Cleanup
+on:
+  schedule:
+    - cron: '0 2 * * 0'  # Every Sunday at 2 AM
+  workflow_dispatch:
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}/${{ github.head_ref || github.ref_name }}
+jobs:
+  cleanup:
+    name: Cleanup Old Images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Delete untagged images
+        run: |
+          echo "Deleting untagged images..."
+          IMAGES_TO_DELETE=$(aws ecr list-images \
+            --repository-name $ECR_REPOSITORY \
+            --filter "tagStatus=UNTAGGED" \
+            --query 'imageIds[*]' \
+            --output json)
+          
+          if [ "$IMAGES_TO_DELETE" != "[]" ]; then
+            aws ecr batch-delete-image \
+              --repository-name $ECR_REPOSITORY \
+              --image-ids "$IMAGES_TO_DELETE" || true
+            echo "Deleted untagged images"
+          else
+            echo "No untagged images to delete"
+          fi
+      - name: Keep only last 10 images
+        run: |
+          echo "Keeping only the last 10 images..."
+          
+          # Get all images sorted by push date
+          OLD_IMAGES=$(aws ecr describe-images \
+            --repository-name $ECR_REPOSITORY \
+            --query 'sort_by(imageDetails,&imagePushedAt)[:-10].[imageDigest]' \
+            --output text)
+          
+          # Delete old images
+          for digest in $OLD_IMAGES; do
+            echo "Deleting image with digest: $digest"
+            aws ecr batch-delete-image \
+              --repository-name $ECR_REPOSITORY \
+              --image-ids imageDigest=$digest || true
+          done
+      - name: Report cleanup results
+        run: |
+          REMAINING=$(aws ecr describe-images \
+            --repository-name $ECR_REPOSITORY \
+            --query 'length(imageDetails)')
+          
+          echo "### ECR Cleanup Complete! 🧹" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Images remaining:** $REMAINING" >> $GITHUB_STEP_SUMMARY

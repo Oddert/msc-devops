@@ -1,0 +1,28 @@
+meta {
+  name: POST /signup (other user)
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{url}}/auth/signup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "jessie",
+    "password": "password",
+    "readableName": "Jessie",
+    "areas": [
+      "PDB_User",
+      "rPcf_WHATIF"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
