@@ -27,7 +27,7 @@ RUN python -m pip install -r requirements.txt
 EXPOSE 80
 
 # Define environment variable
-ENV NAME HelloWorld
+ENV NAME=HelloWorld
 
 # Run app.py when the container launches
 CMD ["uvicorn", "start:app", "--host", "0.0.0.0", "--port", "80"]
